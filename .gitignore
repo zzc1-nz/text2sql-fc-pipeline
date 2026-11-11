@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Pipeline artifacts (regenerable; the demo run can be rebuilt end-to-end)
+artifacts/
+.scratch/
+data/spider/
+data/fixture/databases/
+*.sqlite
+
+# Keep the small dataset JSON + committed report tables
+!data/fixture/tables.json
+!data/fixture/train.json
+!data/fixture/dev.json
+!reports/*.md
+!reports/*.csv
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# HF
+*.safetensors
+*.bin
+*.pt

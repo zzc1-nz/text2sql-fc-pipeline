@@ -1,0 +1,146 @@
+[
+ {
+  "db_id": "college",
+  "question": "What is the average salary of instructors in the Mathematics department?",
+  "query": "SELECT AVG(salary) FROM instructor WHERE dept_id = 2",
+  "id": "college_dev_002"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "List each restaurant name together with its number of reviews.",
+  "query": "SELECT T1.rest_name, COUNT(*) FROM restaurant AS T1 JOIN review AS T2 ON T1.rest_id = T2.rest_id GROUP BY T1.rest_name",
+  "id": "restaurant_dev_003"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "Find the names of customers who signed up in 2023.",
+  "query": "SELECT cust_name FROM customer WHERE signup_date LIKE '2023%'",
+  "id": "ecommerce_dev_001"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "Which restaurant has the highest average review stars?",
+  "query": "SELECT T1.rest_name FROM restaurant AS T1 JOIN review AS T2 ON T1.rest_id = T2.rest_id GROUP BY T1.rest_name ORDER BY AVG(T2.stars) DESC LIMIT 1",
+  "id": "restaurant_dev_001"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "How many restaurants are there in each city?",
+  "query": "SELECT city, COUNT(*) FROM restaurant GROUP BY city",
+  "id": "restaurant_dev_000"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "Which order has the highest total value?",
+  "query": "SELECT T1.order_id FROM orders AS T1 JOIN order_item AS T2 ON T1.order_id = T2.order_id JOIN product AS T3 ON T2.prod_id = T3.prod_id GROUP BY T1.order_id ORDER BY SUM(T2.quantity * T3.unit_price * (1 - T2.discount)) DESC LIMIT 1",
+  "id": "ecommerce_dev_000"
+ },
+ {
+  "db_id": "flight",
+  "question": "List the codes of airports in China.",
+  "query": "SELECT airport_code FROM airport WHERE country = 'China'",
+  "id": "flight_dev_003"
+ },
+ {
+  "db_id": "college",
+  "question": "What is the maximum GPA among students in the History department?",
+  "query": "SELECT MAX(gpa) FROM student WHERE dept_id = 4",
+  "id": "college_dev_001"
+ },
+ {
+  "db_id": "hospital",
+  "question": "What is the total number of prescriptions written?",
+  "query": "SELECT COUNT(*) FROM prescription",
+  "id": "hospital_dev_002"
+ },
+ {
+  "db_id": "hospital",
+  "question": "Which doctor has the most expensive total visit cost?",
+  "query": "SELECT T1.doctor_name FROM doctor AS T1 JOIN visit AS T2 ON T1.doctor_id = T2.doctor_id GROUP BY T1.doctor_name ORDER BY SUM(T2.cost) DESC LIMIT 1",
+  "id": "hospital_dev_000"
+ },
+ {
+  "db_id": "flight",
+  "question": "What is the total number of passengers carried by each airline?",
+  "query": "SELECT T1.airline_name, COUNT(*) FROM airline AS T1 JOIN flight AS T2 ON T1.airline_id = T2.airline_id JOIN passenger AS T3 ON T2.flight_id = T3.flight_id GROUP BY T1.airline_name",
+  "id": "flight_dev_002"
+ },
+ {
+  "db_id": "hospital",
+  "question": "List the drug names prescribed during visits in 2023.",
+  "query": "SELECT DISTINCT T1.drug_name FROM prescription AS T1 JOIN visit AS T2 ON T1.visit_id = T2.visit_id WHERE T2.visit_date LIKE '2023%'",
+  "id": "hospital_dev_001"
+ },
+ {
+  "db_id": "music",
+  "question": "Which labels have released albums for more than one artist?",
+  "query": "SELECT label FROM album GROUP BY label HAVING COUNT(DISTINCT artist_id) > 1",
+  "id": "music_dev_000"
+ },
+ {
+  "db_id": "music",
+  "question": "How many albums has each artist released?",
+  "query": "SELECT T1.artist_name, COUNT(*) FROM artist AS T1 JOIN album AS T2 ON T1.artist_id = T2.artist_id GROUP BY T1.artist_name",
+  "id": "music_dev_001"
+ },
+ {
+  "db_id": "flight",
+  "question": "How many seats are still available on each flight?",
+  "query": "SELECT flight_id, seats_total - seats_sold FROM flight",
+  "id": "flight_dev_000"
+ },
+ {
+  "db_id": "music",
+  "question": "What is the earliest debut year among the artists?",
+  "query": "SELECT MIN(debut_year) FROM artist",
+  "id": "music_dev_002"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "How many distinct customers placed an order in 2023?",
+  "query": "SELECT COUNT(DISTINCT cust_id) FROM orders WHERE order_date LIKE '2023%'",
+  "id": "ecommerce_dev_003"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "Show products with stock below 50.",
+  "query": "SELECT prod_name, stock FROM product WHERE stock < 50",
+  "id": "ecommerce_dev_002"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "What is the most expensive dish on the menu?",
+  "query": "SELECT dish_name FROM dish ORDER BY price DESC LIMIT 1",
+  "id": "restaurant_dev_002"
+ },
+ {
+  "db_id": "hospital",
+  "question": "Show patient names with their doctor names.",
+  "query": "SELECT T1.patient_name, T3.doctor_name FROM patient AS T1 JOIN visit AS T2 ON T1.patient_id = T2.patient_id JOIN doctor AS T3 ON T2.doctor_id = T3.doctor_id",
+  "id": "hospital_dev_003"
+ },
+ {
+  "db_id": "flight",
+  "question": "What is the average ticket price of flights from Beijing to Frankfurt?",
+  "query": "SELECT AVG(T1.price) FROM flight AS T1 JOIN airport AS T2 ON T1.origin_id = T2.airport_id JOIN airport AS T3 ON T1.dest_id = T3.airport_id WHERE T2.city = 'Beijing' AND T3.city = 'Frankfurt'",
+  "id": "flight_dev_001"
+ },
+ {
+  "db_id": "music",
+  "question": "List song titles and the album they belong to, ordered by plays descending.",
+  "query": "SELECT T2.song_title, T1.album_title FROM album AS T1 JOIN song AS T2 ON T1.album_id = T2.album_id ORDER BY T2.plays DESC",
+  "id": "music_dev_003"
+ },
+ {
+  "db_id": "college",
+  "question": "What is the name of the oldest student?",
+  "query": "SELECT stu_name FROM student ORDER BY age DESC LIMIT 1",
+  "id": "college_dev_003"
+ },
+ {
+  "db_id": "college",
+  "question": "Which departments have more than 2 students?",
+  "query": "SELECT T2.dept_name FROM student AS T1 JOIN department AS T2 ON T1.dept_id = T2.dept_id GROUP BY T2.dept_name HAVING COUNT(*) > 2",
+  "id": "college_dev_000"
+ }
+]

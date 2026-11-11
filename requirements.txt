@@ -1,0 +1,23 @@
+# 环境依赖
+# 注意：本项目的演示流水线在离线环境下可完整运行，只需要 numpy + torch + matplotlib + pyyaml。
+# 下面标注了各项的用途，方便按需安装。
+
+# ---- 核心（演示流水线必需） ----
+numpy>=1.24
+torch>=2.0
+matplotlib>=3.7
+PyYAML>=6.0
+
+# ---- 生产路径（真实 API 数据合成）----
+httpx>=0.24            # OpenAI 兼容异步客户端（也可用 urllib，已内置回退）
+
+# ---- 生产路径（HF/PEFT LoRA 微调，需要 GPU）----
+# transformers>=4.40
+# peft>=0.10
+# accelerate>=0.28
+# bitsandbytes>=0.43     # QLoRA 4-bit 量化
+# datasets>=2.18
+# trl>=0.7
+
+# ---- 开发（测试）----
+# 测试使用标准库 unittest，无需 pytest

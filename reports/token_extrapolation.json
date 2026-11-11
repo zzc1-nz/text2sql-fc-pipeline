@@ -1,0 +1,120 @@
+{
+  "spider_reference_scale": {
+    "n_questions": 10181,
+    "n_unique_sql": 5693,
+    "n_databases": 200,
+    "train_questions": 7000,
+    "dev_questions": 1034
+  },
+  "measured": {
+    "n_source_examples": 98,
+    "n_synth_records": 363,
+    "synth_prompt_tokens": 192516,
+    "synth_completion_tokens": 18072,
+    "judge_prompt_tokens": 142905,
+    "judge_completion_tokens": 13508,
+    "synth_cost_usd": 0.011433,
+    "judge_cost_usd": 0.183429,
+    "synth_tokens_per_record": 580.1,
+    "synth_tokens_per_source": 2148.9,
+    "judge_tokens_per_record": 430.9,
+    "total_tokens": 367001,
+    "total_cost_usd": 0.1949
+  },
+  "projections": [
+    {
+      "label": "Spider train (7,000 q)",
+      "n_source_examples": 7000,
+      "n_synth_records": 28000,
+      "plan": {
+        "cot": 7000,
+        "paraphrase": 14000,
+        "hard_negative": 7000
+      },
+      "synth_tokens": 16243702,
+      "judge_tokens": 12064915,
+      "total_tokens": 28308617,
+      "synth_cost_usd": 0.8819,
+      "judge_cost_usd": 14.1488,
+      "total_cost_usd": 15.0307,
+      "total_tokens_m": 28.309
+    },
+    {
+      "label": "Spider full (10,181 q)",
+      "n_source_examples": 10181,
+      "n_synth_records": 40724,
+      "plan": {
+        "cot": 10181,
+        "paraphrase": 20362,
+        "hard_negative": 10181
+      },
+      "synth_tokens": 23625305,
+      "judge_tokens": 17547557,
+      "total_tokens": 41172862,
+      "synth_cost_usd": 1.2826,
+      "judge_cost_usd": 20.5784,
+      "total_cost_usd": 21.861,
+      "total_tokens_m": 41.173
+    },
+    {
+      "label": "Augmented x3 (30k samples)",
+      "n_source_examples": 10181,
+      "n_synth_records": 30543,
+      "plan": {
+        "cot": 10181,
+        "paraphrase": 20362,
+        "hard_negative": 0
+      },
+      "synth_tokens": 17718979,
+      "judge_tokens": 13160667,
+      "total_tokens": 30879646,
+      "synth_cost_usd": 0.962,
+      "judge_cost_usd": 15.4338,
+      "total_cost_usd": 16.3958,
+      "total_tokens_m": 30.88
+    },
+    {
+      "label": "Augmented x4 (40k samples)",
+      "n_source_examples": 10181,
+      "n_synth_records": 61086,
+      "plan": {
+        "cot": 20362,
+        "paraphrase": 30543,
+        "hard_negative": 10181
+      },
+      "synth_tokens": 35437957,
+      "judge_tokens": 26321335,
+      "total_tokens": 61759292,
+      "synth_cost_usd": 1.924,
+      "judge_cost_usd": 30.8676,
+      "total_cost_usd": 32.7916,
+      "total_tokens_m": 61.759
+    },
+    {
+      "label": "Augmented x5 (50k samples)",
+      "n_source_examples": 10181,
+      "n_synth_records": 71267,
+      "plan": {
+        "cot": 20362,
+        "paraphrase": 30543,
+        "hard_negative": 20362
+      },
+      "synth_tokens": 41344284,
+      "judge_tokens": 30708224,
+      "total_tokens": 72052508,
+      "synth_cost_usd": 2.2446,
+      "judge_cost_usd": 36.0122,
+      "total_cost_usd": 38.2568,
+      "total_tokens_m": 72.053
+    }
+  ],
+  "headline": {
+    "measured_note": "Per-sample token cost is measured on the demo fixture; projections are linear in the number of augmented records.",
+    "spider_full_tokens_m": 41.173,
+    "spider_full_cost_usd": 21.861,
+    "max_tokens_m": 72.053,
+    "max_tokens_label": "Augmented x5 (50k samples)",
+    "reaches_10m": true,
+    "cheap_model_share": 5.9
+  }
+}

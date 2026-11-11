@@ -1,0 +1,81 @@
+# Production config: real Spider + real OpenAI-compatible APIs + HF/PEFT LoRA.
+# Fill in base_url / api_key_env and point paths.spider_dir at the Spider release.
+#
+#   export DEEPSEEK_API_KEY=...
+#   export OPENAI_API_KEY=...
+#   python -m fcdata.cli synth --config configs/production.yaml
+#
+run_name: production
+
+paths:
+  root: "."
+  spider_dir: "data/spider"
+  artifacts_dir: "artifacts/prod"
+  reports_dir: "reports/prod"
+
+providers:
+  # cheap generator: the bulk of the 10M+ synthesis tokens
+  cheap:
+    name: openai
+    model: deepseek-chat
+    base_url: "https://api.deepseek.com/v1"
+    api_key_env: DEEPSEEK_API_KEY
+    temperature: 0.8
+    max_tokens: 768
+    concurrency: 32
+    max_retries: 5
+    timeout_s: 120
+    price_in_per_mtok: 0.27
+    price_out_per_mtok: 1.10
+  # quality judge: small share of calls, much higher price
+  judge:
+    name: openai
+    model: gpt-4o-mini
+    base_url: "https://api.openai.com/v1"
+    api_key_env: OPENAI_API_KEY
+    temperature: 0.0
+    max_tokens: 256
+    concurrency: 8
+    max_retries: 5
+    timeout_s: 60
+    price_in_per_mtok: 0.15
+    price_out_per_mtok: 0.60
+  trainer:
+    name: mock
+    model: local
+
+synth:
+  cot_per_example: 2
+  paraphrase_per_example: 3
+  hard_negative_per_example: 2
+  max_source_examples: 0
+  hard_negative_use_difficulty: true
+  hard_negative_hard_fraction: 0.5
+
+validate:
+  enable_format: true
+  enable_semantic: true
+  semantic_sample: 0
+  semantic_threshold: 0.5
+
+fmt:
+  tool_name: execute_sql
+  chat_template: qwen
+
+train:
+  backend: hf
+  hf_model_name: Qwen/Qwen2.5-7B-Instruct
+  hf_dtype: bfloat16
+  hf_load_in_4bit: true
+  lora_r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  epochs: 3
+  batch_size: 4
+  grad_accum: 8
+  lr: 0.0002
+  max_seq_len: 2048
+
+ev:
+  split: dev
+  max_examples: 0

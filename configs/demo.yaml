@@ -1,0 +1,114 @@
+# Token ledger for the mock/demo run
+run_name: demo
+
+paths:
+  root: "."
+  data_dir: "data"
+  fixture_dir: "data/fixture"
+  spider_dir: "data/spider"
+  artifacts_dir: "artifacts"
+  reports_dir: "reports"
+  cache_dir: "artifacts/llm_cache"
+
+providers:
+  cheap:
+    name: mock
+    model: mock-cheap-1
+    temperature: 0.8
+    max_tokens: 512
+    concurrency: 8
+    price_in_per_mtok: 0.05
+    price_out_per_mtok: 0.10
+  judge:
+    name: mock
+    model: mock-judge-1
+    temperature: 0.0
+    max_tokens: 256
+    concurrency: 4
+    price_in_per_mtok: 1.00
+    price_out_per_mtok: 3.00
+  trainer:
+    name: mock
+    model: local-model
+
+synth:
+  cot_per_example: 1
+  paraphrase_per_example: 2
+  hard_negative_per_example: 1
+  seed: 17
+  hard_negative_use_difficulty: true
+  hard_negative_hard_fraction: 0.5
+  max_total_tokens: 0
+
+validate:
+  enable_format: true
+  enable_semantic: true
+  semantic_sample: 0
+  # Calibrated from data, not inherited: scripts/tune_threshold.py measures the
+  # threshold against an independent ground truth (does the record's SQL execute
+  # to the same result set as the source Spider gold query?). On the offline
+  # teacher all 363 records are provably correct, so precision is 100% at every
+  # threshold and the threshold only controls FALSE NEGATIVES:
+  #   0.30 -> keeps 97.8%, drops 8 correct    0.50 -> keeps 73.0%, drops 98 correct
+  #   0.40 -> keeps 95.9%, drops 15 correct  0.60 -> keeps 60.1%, drops 145 correct
+  # 0.40 keeps the gate meaningful while discarding <5% of verified-correct data.
+  semantic_threshold: 0.4
+  judge_role: judge
+  drop_failed: true
+
+fmt:
+  tool_name: execute_sql
+  chat_template: qwen
+  include_schema_in_prompt: true
+  max_schema_tables: 12
+
+train:
+  backend: reference
+  # Sized from scripts/bench_train.py: the full experiment matrix is
+  # 1 main run + 3 ablation configs + 4 scale points = 8 trainings on CPU,
+  # so throughput is the binding constraint. L4/H4/d128 = 1.18M params at
+  # ~2.3 steps/sec (~7 min per 1k steps) is the largest config that keeps the
+  # whole matrix inside a few minutes.
+  n_layer: 3
+  n_head: 4
+  d_model: 128
+  d_ff: 512
+  dropout: 0.1
+  vocab_size: 2048
+  # 576 is the smallest value that truncates ZERO records on this corpus.
+  # Measured on the 446-record SFT set: prompt p50 261 / max 442, target max 266,
+  # total max 557. At 512, 2 records lose part of the DDL block, and the model
+  # then emits schema-shaped SQL against tables it was never shown -- a silent,
+  # total experiment failure that looks like "the model can't do text2sql".
+  # Do NOT shrink this as a speed lever; shrink n_layer/d_model instead.
+  max_seq_len: 576
+  lora_r: 8
+  lora_alpha: 16
+  lora_dropout: 0.05
+  epochs: 8
+  batch_size: 16
+  grad_accum: 1
+  # ~1e-3, NOT 3e-4: 3e-4 is a LoRA learning rate for adapting a pretrained
+  # model. The reference backend trains ~780K params FROM SCRATCH, which needs a
+  # much larger step size. Measured: at 3e-4 the model plateaus around loss 5.7
+  # and emits degenerate text; at 1e-3 it reaches loss ~0.8 and generalises.
+  lr: 0.001
+  seed: 17
+  # 800 steps is the measured point where held-out execution accuracy becomes
+  # non-zero and is still climbing (0% at 100-200 steps, 10% at 400-600,
+  # 27.5% at 800). Below ~400 steps every configuration reads 0%, which would
+  # make the ablation table meaningless.
+  max_steps: 800
+
+ev:
+  split: dev
+  max_new_tokens: 160
+  temperature: 0.0
+  sql_timeout_s: 5.0
+
+ablation:
+  configs:
+    - raw_only
+    - plus_cot
+    - plus_hard_negatives
+  dev_sample: 0

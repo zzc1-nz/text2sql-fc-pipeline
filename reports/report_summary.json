@@ -1,0 +1,30 @@
+{
+  "markdown": "reports\\README_TABLES.md",
+  "csv": {
+    "ablation.csv": "reports\\ablation.csv"
+  },
+  "figures": {
+    "cost_vs_quality": "reports\\cost_vs_quality.png",
+    "cost_vs_partial": "reports\\cost_vs_partial.png"
+  },
+  "headline": {
+    "available": true,
+    "baseline_config": "raw_only",
+    "baseline_exec_acc": 0.0,
+    "rich_config": "plus_hard_negatives",
+    "rich_exec_acc": 0.0,
+    "gain_pp": 0.0,
+    "synth_tokens": 239883,
+    "synth_cost_usd": 0.011288,
+    "points_per_mtok": 0.0,
+    "tokens_per_point": null,
+    "relative_improvement_pct": null,
+    "no_measurable_gain": true,
+    "reason": "no measurable accuracy gain between the baseline and the richest config, so there is no cost/capability ratio to report; the model produced no executable-and-correct SQL in either arm"
+  },
+  "saturation": {},
+  "n_ablation_rows": 3,
+  "n_scale_points": 0,
+  "validation_funnel_stages": 4,
+  "ledger_totals": {}
+}

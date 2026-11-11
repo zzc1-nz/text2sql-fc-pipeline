@@ -1,0 +1,590 @@
+[
+ {
+  "db_id": "ecommerce",
+  "question": "What is the average unit price of products in the Furniture category?",
+  "query": "SELECT AVG(unit_price) FROM product WHERE category = 'Furniture'",
+  "id": "ecommerce_train_004"
+ },
+ {
+  "db_id": "flight",
+  "question": "Show the names of passengers who paid for a flight that costs more than 900.",
+  "query": "SELECT T3.passenger_name FROM flight AS T1 JOIN passenger AS T3 ON T1.flight_id = T3.flight_id WHERE T1.price > 900",
+  "id": "flight_train_015"
+ },
+ {
+  "db_id": "music",
+  "question": "Find the artist with the highest total concert attendance.",
+  "query": "SELECT T1.artist_name FROM artist AS T1 JOIN concert AS T2 ON T1.artist_id = T2.artist_id GROUP BY T1.artist_name ORDER BY SUM(T2.tickets_sold) DESC LIMIT 1",
+  "id": "music_train_014"
+ },
+ {
+  "db_id": "music",
+  "question": "List each album title and its total number of plays.",
+  "query": "SELECT T1.album_title, SUM(T2.plays) FROM album AS T1 JOIN song AS T2 ON T1.album_id = T2.album_id GROUP BY T1.album_title",
+  "id": "music_train_015"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "Show each customer name and their total number of orders.",
+  "query": "SELECT T1.cust_name, COUNT(*) FROM customer AS T1 JOIN orders AS T2 ON T1.cust_id = T2.cust_id GROUP BY T1.cust_name",
+  "id": "ecommerce_train_014"
+ },
+ {
+  "db_id": "flight",
+  "question": "List airports that are not the origin of any flight.",
+  "query": "SELECT airport_code FROM airport WHERE airport_id NOT IN (SELECT origin_id FROM flight)",
+  "id": "flight_train_012"
+ },
+ {
+  "db_id": "music",
+  "question": "Show the total plays for each artist.",
+  "query": "SELECT T1.artist_name, SUM(T3.plays) FROM artist AS T1 JOIN album AS T2 ON T1.artist_id = T2.artist_id JOIN song AS T3 ON T2.album_id = T3.album_id GROUP BY T1.artist_name",
+  "id": "music_train_005"
+ },
+ {
+  "db_id": "college",
+  "question": "Show the department name and budget of each department with a budget over 3 million.",
+  "query": "SELECT dept_name, budget FROM department WHERE budget > 3000000",
+  "id": "college_train_008"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "Show the average number of stars per restaurant, ordered from highest to lowest.",
+  "query": "SELECT rest_id, AVG(stars) FROM review GROUP BY rest_id ORDER BY AVG(stars) DESC",
+  "id": "restaurant_train_007"
+ },
+ {
+  "db_id": "college",
+  "question": "Which instructor has the highest salary?",
+  "query": "SELECT inst_name FROM instructor ORDER BY salary DESC LIMIT 1",
+  "id": "college_train_007"
+ },
+ {
+  "db_id": "flight",
+  "question": "What is the average age of passengers on flight 1?",
+  "query": "SELECT AVG(age) FROM passenger WHERE flight_id = 1",
+  "id": "flight_train_008"
+ },
+ {
+  "db_id": "college",
+  "question": "List student names together with their department names.",
+  "query": "SELECT T1.stu_name, T2.dept_name FROM student AS T1 JOIN department AS T2 ON T1.dept_id = T2.dept_id",
+  "id": "college_train_002"
+ },
+ {
+  "db_id": "flight",
+  "question": "Which countries have more than one airport in the database?",
+  "query": "SELECT country FROM airport GROUP BY country HAVING COUNT(*) > 1",
+  "id": "flight_train_009"
+ },
+ {
+  "db_id": "hospital",
+  "question": "List the names of patients who were diagnosed with Hypertension.",
+  "query": "SELECT T2.patient_name FROM visit AS T1 JOIN patient AS T2 ON T1.patient_id = T2.patient_id WHERE T1.diagnosis = 'Hypertension'",
+  "id": "hospital_train_001"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "How many reviews were written in 2023?",
+  "query": "SELECT COUNT(*) FROM review WHERE review_date LIKE '2023%'",
+  "id": "restaurant_train_013"
+ },
+ {
+  "db_id": "flight",
+  "question": "Show each destination city and the number of flights arriving there.",
+  "query": "SELECT T2.city, COUNT(*) FROM flight AS T1 JOIN airport AS T2 ON T1.dest_id = T2.airport_id GROUP BY T2.city",
+  "id": "flight_train_014"
+ },
+ {
+  "db_id": "college",
+  "question": "Show each department name and the number of students in it, ordered by the count descending.",
+  "query": "SELECT T2.dept_name, COUNT(*) FROM student AS T1 JOIN department AS T2 ON T1.dept_id = T2.dept_id GROUP BY T2.dept_name ORDER BY COUNT(*) DESC",
+  "id": "college_train_015"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "Which cities have restaurants that opened before 2010?",
+  "query": "SELECT DISTINCT city FROM restaurant WHERE opened_year < 2010",
+  "id": "restaurant_train_011"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "Find the names of restaurants that have no reviews.",
+  "query": "SELECT rest_name FROM restaurant WHERE rest_id NOT IN (SELECT rest_id FROM review)",
+  "id": "restaurant_train_008"
+ },
+ {
+  "db_id": "college",
+  "question": "Find courses whose credits are greater than 3 and that belong to the Computer Science department.",
+  "query": "SELECT title FROM course WHERE credits > 3 AND dept_id = 1",
+  "id": "college_train_004"
+ },
+ {
+  "db_id": "college",
+  "question": "Show the building and total budget for each building, sorted by total budget descending.",
+  "query": "SELECT building, SUM(budget) FROM department GROUP BY building ORDER BY SUM(budget) DESC",
+  "id": "college_train_016"
+ },
+ {
+  "db_id": "music",
+  "question": "What is the average song duration per album?",
+  "query": "SELECT album_id, AVG(duration_sec) FROM song GROUP BY album_id",
+  "id": "music_train_004"
+ },
+ {
+  "db_id": "flight",
+  "question": "How many flights depart from each airport? Show the airport code.",
+  "query": "SELECT T2.airport_code, COUNT(*) FROM flight AS T1 JOIN airport AS T2 ON T1.origin_id = T2.airport_id GROUP BY T2.airport_code",
+  "id": "flight_train_007"
+ },
+ {
+  "db_id": "flight",
+  "question": "Find the longest flight by duration.",
+  "query": "SELECT flight_id FROM flight ORDER BY duration_min DESC LIMIT 1",
+  "id": "flight_train_010"
+ },
+ {
+  "db_id": "flight",
+  "question": "Find the names of passengers who flew in first class.",
+  "query": "SELECT passenger_name FROM passenger WHERE seat_class = 'first'",
+  "id": "flight_train_000"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "List the restaurant name and its chef's specialty.",
+  "query": "SELECT T1.rest_name, T2.specialty FROM restaurant AS T1 JOIN chef AS T2 ON T1.rest_id = T2.rest_id",
+  "id": "restaurant_train_006"
+ },
+ {
+  "db_id": "college",
+  "question": "For each student, show the student name and their average grade.",
+  "query": "SELECT T1.stu_name, AVG(T2.grade) FROM student AS T1 JOIN enrollment AS T2 ON T1.stu_id = T2.stu_id GROUP BY T1.stu_name",
+  "id": "college_train_017"
+ },
+ {
+  "db_id": "music",
+  "question": "Which albums have more than 3 songs?",
+  "query": "SELECT T1.album_title FROM album AS T1 JOIN song AS T2 ON T1.album_id = T2.album_id GROUP BY T1.album_title HAVING COUNT(*) > 3",
+  "id": "music_train_009"
+ },
+ {
+  "db_id": "flight",
+  "question": "Which flights are operated by airlines from Germany?",
+  "query": "SELECT T1.flight_id FROM flight AS T1 JOIN airline AS T2 ON T1.airline_id = T2.airline_id WHERE T2.country = 'Germany'",
+  "id": "flight_train_011"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "What is the lowest rating among restaurants in the USA?",
+  "query": "SELECT MIN(rating) FROM restaurant WHERE city IN ('Seattle','Austin')",
+  "id": "restaurant_train_000"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "List each product category and the number of products in it.",
+  "query": "SELECT category, COUNT(*) FROM product GROUP BY category",
+  "id": "ecommerce_train_007"
+ },
+ {
+  "db_id": "college",
+  "question": "How many distinct students have taken at least one course in the Physics department?",
+  "query": "SELECT COUNT(DISTINCT T1.stu_id) FROM enrollment AS T1 JOIN course AS T2 ON T1.course_id = T2.course_id WHERE T2.dept_id = 3",
+  "id": "college_train_000"
+ },
+ {
+  "db_id": "hospital",
+  "question": "Find patients who have never visited the hospital.",
+  "query": "SELECT patient_name FROM patient WHERE patient_id NOT IN (SELECT patient_id FROM visit)",
+  "id": "hospital_train_010"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "Find the customer who placed the most orders.",
+  "query": "SELECT T1.cust_name FROM customer AS T1 JOIN orders AS T2 ON T1.cust_id = T2.cust_id GROUP BY T1.cust_name ORDER BY COUNT(*) DESC LIMIT 1",
+  "id": "ecommerce_train_005"
+ },
+ {
+  "db_id": "college",
+  "question": "Find the names of students who have taken a course titled 'Databases'.",
+  "query": "SELECT T2.stu_name FROM enrollment AS T1 JOIN student AS T2 ON T1.stu_id = T2.stu_id JOIN course AS T3 ON T1.course_id = T3.course_id WHERE T3.title = 'Databases'",
+  "id": "college_train_005"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "List the names of products in the Electronics category.",
+  "query": "SELECT prod_name FROM product WHERE category = 'Electronics'",
+  "id": "ecommerce_train_000"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "Find restaurants that serve both a main dish and a dessert.",
+  "query": "SELECT T1.rest_name FROM restaurant AS T1 JOIN dish AS T2 ON T1.rest_id = T2.rest_id WHERE T2.category = 'main' INTERSECT SELECT T1.rest_name FROM restaurant AS T1 JOIN dish AS T2 ON T1.rest_id = T2.rest_id WHERE T2.category = 'dessert'",
+  "id": "restaurant_train_004"
+ },
+ {
+  "db_id": "hospital",
+  "question": "Show the total cost of visits per patient.",
+  "query": "SELECT T1.patient_name, SUM(T2.cost) FROM patient AS T1 JOIN visit AS T2 ON T1.patient_id = T2.patient_id GROUP BY T1.patient_name",
+  "id": "hospital_train_005"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "Show the name and price of every dish at 'Golden Dragon'.",
+  "query": "SELECT T2.dish_name, T2.price FROM restaurant AS T1 JOIN dish AS T2 ON T1.rest_id = T2.rest_id WHERE T1.rest_name = 'Golden Dragon'",
+  "id": "restaurant_train_001"
+ },
+ {
+  "db_id": "college",
+  "question": "Show the total number of enrollments per semester.",
+  "query": "SELECT semester, COUNT(*) FROM enrollment GROUP BY semester",
+  "id": "college_train_013"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "What is the average quantity per order item?",
+  "query": "SELECT AVG(quantity) FROM order_item",
+  "id": "ecommerce_train_010"
+ },
+ {
+  "db_id": "music",
+  "question": "Show the names of artists from Norway.",
+  "query": "SELECT artist_name FROM artist WHERE country = 'Norway'",
+  "id": "music_train_007"
+ },
+ {
+  "db_id": "music",
+  "question": "List the albums released in the same year as 'Glass Hearts'.",
+  "query": "SELECT album_title FROM album WHERE release_year = (SELECT release_year FROM album WHERE album_title = 'Glass Hearts')",
+  "id": "music_train_010"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "Show the total quantity sold for each product.",
+  "query": "SELECT T1.prod_name, SUM(T2.quantity) FROM product AS T1 JOIN order_item AS T2 ON T1.prod_id = T2.prod_id GROUP BY T1.prod_name",
+  "id": "ecommerce_train_008"
+ },
+ {
+  "db_id": "hospital",
+  "question": "List the names of female patients older than 50.",
+  "query": "SELECT patient_name FROM patient WHERE gender = 'F' AND 2023 - birth_year > 50",
+  "id": "hospital_train_004"
+ },
+ {
+  "db_id": "flight",
+  "question": "Find the airline with the highest average ticket price.",
+  "query": "SELECT T1.airline_name FROM airline AS T1 JOIN flight AS T2 ON T1.airline_id = T2.airline_id GROUP BY T1.airline_name ORDER BY AVG(T2.price) DESC LIMIT 1",
+  "id": "flight_train_001"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "Find products priced above the average product price.",
+  "query": "SELECT prod_name FROM product WHERE unit_price > (SELECT AVG(unit_price) FROM product)",
+  "id": "ecommerce_train_001"
+ },
+ {
+  "db_id": "hospital",
+  "question": "How many patients are from Boston?",
+  "query": "SELECT COUNT(*) FROM patient WHERE city = 'Boston'",
+  "id": "hospital_train_008"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "How many dishes are in the 'starter' category?",
+  "query": "SELECT COUNT(*) FROM dish WHERE category = 'starter'",
+  "id": "restaurant_train_003"
+ },
+ {
+  "db_id": "college",
+  "question": "Find the names of students who are enrolled in both 'Data Structures' and 'Databases'.",
+  "query": "SELECT T1.stu_name FROM student AS T1 JOIN enrollment AS T2 ON T1.stu_id = T2.stu_id JOIN course AS T3 ON T2.course_id = T3.course_id WHERE T3.title = 'Data Structures' INTERSECT SELECT T1.stu_name FROM student AS T1 JOIN enrollment AS T2 ON T1.stu_id = T2.stu_id JOIN course AS T3 ON T2.course_id = T3.course_id WHERE T3.title = 'Databases'",
+  "id": "college_train_003"
+ },
+ {
+  "db_id": "music",
+  "question": "Find artists who have never held a concert.",
+  "query": "SELECT artist_name FROM artist WHERE artist_id NOT IN (SELECT artist_id FROM concert)",
+  "id": "music_train_013"
+ },
+ {
+  "db_id": "hospital",
+  "question": "How many doctors are in each department?",
+  "query": "SELECT T1.dept_name, COUNT(*) FROM department AS T1 JOIN doctor AS T2 ON T1.dept_id = T2.dept_id GROUP BY T1.dept_name",
+  "id": "hospital_train_011"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "What is the total amount spent by customer 'Aaron Bell'?",
+  "query": "SELECT SUM(T2.quantity * T3.unit_price * (1 - T2.discount)) FROM orders AS T1 JOIN order_item AS T2 ON T1.order_id = T2.order_id JOIN product AS T3 ON T2.prod_id = T3.prod_id WHERE T1.cust_id = 1",
+  "id": "ecommerce_train_011"
+ },
+ {
+  "db_id": "flight",
+  "question": "Show the flight id and price for flights that are cheaper than 700.",
+  "query": "SELECT flight_id, price FROM flight WHERE price < 700",
+  "id": "flight_train_002"
+ },
+ {
+  "db_id": "flight",
+  "question": "How many flights does each airline operate?",
+  "query": "SELECT T1.airline_name, COUNT(*) FROM airline AS T1 JOIN flight AS T2 ON T1.airline_id = T2.airline_id GROUP BY T1.airline_name",
+  "id": "flight_train_013"
+ },
+ {
+  "db_id": "college",
+  "question": "Find the titles of courses that have never been enrolled in.",
+  "query": "SELECT title FROM course WHERE course_id NOT IN (SELECT course_id FROM enrollment)",
+  "id": "college_train_001"
+ },
+ {
+  "db_id": "flight",
+  "question": "List the names of passengers older than 40 who travelled in business class.",
+  "query": "SELECT passenger_name FROM passenger WHERE age > 40 AND seat_class = 'business'",
+  "id": "flight_train_004"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "Which restaurant has the most dishes?",
+  "query": "SELECT T1.rest_name FROM restaurant AS T1 JOIN dish AS T2 ON T1.rest_id = T2.rest_id GROUP BY T1.rest_name ORDER BY COUNT(*) DESC LIMIT 1",
+  "id": "restaurant_train_005"
+ },
+ {
+  "db_id": "college",
+  "question": "How many courses does each department offer?",
+  "query": "SELECT dept_id, COUNT(*) FROM course GROUP BY dept_id",
+  "id": "college_train_012"
+ },
+ {
+  "db_id": "hospital",
+  "question": "Show the diagnosis and cost of visits that cost more than 1000.",
+  "query": "SELECT diagnosis, cost FROM visit WHERE cost > 1000",
+  "id": "hospital_train_012"
+ },
+ {
+  "db_id": "hospital",
+  "question": "What is the number of visits per department?",
+  "query": "SELECT T1.dept_name, COUNT(*) FROM department AS T1 JOIN doctor AS T2 ON T1.dept_id = T2.dept_id JOIN visit AS T3 ON T2.doctor_id = T3.doctor_id GROUP BY T1.dept_name",
+  "id": "hospital_train_009"
+ },
+ {
+  "db_id": "hospital",
+  "question": "Find the doctor with the highest salary.",
+  "query": "SELECT doctor_name FROM doctor ORDER BY salary DESC LIMIT 1",
+  "id": "hospital_train_014"
+ },
+ {
+  "db_id": "college",
+  "question": "List the names of instructors whose salary is above the average instructor salary.",
+  "query": "SELECT inst_name FROM instructor WHERE salary > (SELECT AVG(salary) FROM instructor)",
+  "id": "college_train_014"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "List the names of restaurants with a rating above 4.5.",
+  "query": "SELECT rest_name FROM restaurant WHERE rating > 4.5",
+  "id": "restaurant_train_009"
+ },
+ {
+  "db_id": "music",
+  "question": "What is the total number of tickets sold for artist 'The Velvet Keys'?",
+  "query": "SELECT SUM(T2.tickets_sold) FROM artist AS T1 JOIN concert AS T2 ON T1.artist_id = T2.artist_id WHERE T1.artist_name = 'The Velvet Keys'",
+  "id": "music_train_008"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "Which products have never been ordered?",
+  "query": "SELECT prod_name FROM product WHERE prod_id NOT IN (SELECT prod_id FROM order_item)",
+  "id": "ecommerce_train_003"
+ },
+ {
+  "db_id": "music",
+  "question": "Show the artist name and the venue of their concerts in 2023.",
+  "query": "SELECT T1.artist_name, T2.venue FROM artist AS T1 JOIN concert AS T2 ON T1.artist_id = T2.artist_id WHERE T2.concert_date LIKE '2023%'",
+  "id": "music_train_006"
+ },
+ {
+  "db_id": "hospital",
+  "question": "What is the average visit cost for the Oncology department?",
+  "query": "SELECT AVG(T1.cost) FROM visit AS T1 JOIN doctor AS T2 ON T1.doctor_id = T2.doctor_id WHERE T2.dept_id = 5",
+  "id": "hospital_train_000"
+ },
+ {
+  "db_id": "music",
+  "question": "What is the number of songs per genre?",
+  "query": "SELECT T1.genre, COUNT(*) FROM artist AS T1 JOIN album AS T2 ON T1.artist_id = T2.artist_id JOIN song AS T3 ON T2.album_id = T3.album_id GROUP BY T1.genre",
+  "id": "music_train_002"
+ },
+ {
+  "db_id": "hospital",
+  "question": "What is the most common diagnosis?",
+  "query": "SELECT diagnosis FROM visit GROUP BY diagnosis ORDER BY COUNT(*) DESC LIMIT 1",
+  "id": "hospital_train_013"
+ },
+ {
+  "db_id": "hospital",
+  "question": "Which doctors have seen more than 2 patients?",
+  "query": "SELECT T1.doctor_name FROM doctor AS T1 JOIN visit AS T2 ON T1.doctor_id = T2.doctor_id GROUP BY T1.doctor_name HAVING COUNT(*) > 2",
+  "id": "hospital_train_006"
+ },
+ {
+  "db_id": "music",
+  "question": "Which genre has the most artists?",
+  "query": "SELECT genre FROM artist GROUP BY genre ORDER BY COUNT(*) DESC LIMIT 1",
+  "id": "music_train_000"
+ },
+ {
+  "db_id": "music",
+  "question": "List the titles of songs longer than 300 seconds.",
+  "query": "SELECT song_title FROM song WHERE duration_sec > 300",
+  "id": "music_train_012"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "List the names of customers who have placed a cancelled order.",
+  "query": "SELECT DISTINCT T1.cust_name FROM customer AS T1 JOIN orders AS T2 ON T1.cust_id = T2.cust_id WHERE T2.status = 'cancelled'",
+  "id": "ecommerce_train_013"
+ },
+ {
+  "db_id": "flight",
+  "question": "What is the total number of seats sold across all flights?",
+  "query": "SELECT SUM(seats_sold) FROM flight",
+  "id": "flight_train_003"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "Show the name and unit price of the most expensive product.",
+  "query": "SELECT prod_name, unit_price FROM product ORDER BY unit_price DESC LIMIT 1",
+  "id": "ecommerce_train_012"
+ },
+ {
+  "db_id": "hospital",
+  "question": "Show the average dosage per drug.",
+  "query": "SELECT drug_name, AVG(dosage_mg) FROM prescription GROUP BY drug_name",
+  "id": "hospital_train_007"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "What is the average price of dishes in the dessert category?",
+  "query": "SELECT AVG(price) FROM dish WHERE category = 'dessert'",
+  "id": "restaurant_train_015"
+ },
+ {
+  "db_id": "hospital",
+  "question": "Which departments have a chief doctor who was hired before 2010?",
+  "query": "SELECT T1.dept_name FROM department AS T1 JOIN doctor AS T2 ON T1.dept_id = T2.dept_id WHERE T2.title = 'Chief' AND T2.hire_year < 2010",
+  "id": "hospital_train_002"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "Show all reviews with 5 stars along with the restaurant name.",
+  "query": "SELECT T2.rest_name, T1.reviewer FROM review AS T1 JOIN restaurant AS T2 ON T1.rest_id = T2.rest_id WHERE T1.stars = 5",
+  "id": "restaurant_train_010"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "List the names of restaurants whose average dish price is above 20.",
+  "query": "SELECT T1.rest_name FROM restaurant AS T1 JOIN dish AS T2 ON T1.rest_id = T2.rest_id GROUP BY T1.rest_name HAVING AVG(T2.price) > 20",
+  "id": "restaurant_train_012"
+ },
+ {
+  "db_id": "hospital",
+  "question": "Find the total cost of visits with diagnosis 'Lymphoma'.",
+  "query": "SELECT SUM(cost) FROM visit WHERE diagnosis = 'Lymphoma'",
+  "id": "hospital_train_015"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "List the customers with gold loyalty tier who live in New York.",
+  "query": "SELECT cust_name FROM customer WHERE loyalty_tier = 'gold' AND city = 'New York'",
+  "id": "ecommerce_train_009"
+ },
+ {
+  "db_id": "college",
+  "question": "List the names of all students whose GPA is above 3.5.",
+  "query": "SELECT stu_name FROM student WHERE gpa > 3.5",
+  "id": "college_train_010"
+ },
+ {
+  "db_id": "hospital",
+  "question": "List patients born before 1960.",
+  "query": "SELECT patient_name FROM patient WHERE birth_year < 1960",
+  "id": "hospital_train_003"
+ },
+ {
+  "db_id": "college",
+  "question": "How many students are enrolled in the Computer Science department?",
+  "query": "SELECT COUNT(*) FROM student WHERE dept_id = 1",
+  "id": "college_train_009"
+ },
+ {
+  "db_id": "music",
+  "question": "How many concerts were held in Tokyo?",
+  "query": "SELECT COUNT(*) FROM concert WHERE city = 'Tokyo'",
+  "id": "music_train_011"
+ },
+ {
+  "db_id": "music",
+  "question": "Find albums released after 2015 along with their artist names.",
+  "query": "SELECT T2.album_title, T1.artist_name FROM artist AS T1 JOIN album AS T2 ON T1.artist_id = T2.artist_id WHERE T2.release_year > 2015",
+  "id": "music_train_001"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "How many orders have the status 'pending'?",
+  "query": "SELECT COUNT(*) FROM orders WHERE status = 'pending'",
+  "id": "ecommerce_train_002"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "Find the names of chefs who have more than 15 years of experience.",
+  "query": "SELECT chef_name FROM chef WHERE years_experience > 15",
+  "id": "restaurant_train_014"
+ },
+ {
+  "db_id": "flight",
+  "question": "List flights that have sold more than 90 percent of their seats.",
+  "query": "SELECT flight_id FROM flight WHERE seats_sold * 1.0 / seats_total > 0.9",
+  "id": "flight_train_005"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "What is the total revenue of all completed orders?",
+  "query": "SELECT SUM(T2.quantity * T3.unit_price * (1 - T2.discount)) FROM orders AS T1 JOIN order_item AS T2 ON T1.order_id = T2.order_id JOIN product AS T3 ON T2.prod_id = T3.prod_id WHERE T1.status = 'completed'",
+  "id": "ecommerce_train_006"
+ },
+ {
+  "db_id": "college",
+  "question": "What is the average GPA of students who enrolled in 2021 or later?",
+  "query": "SELECT AVG(gpa) FROM student WHERE enroll_year >= 2021",
+  "id": "college_train_011"
+ },
+ {
+  "db_id": "music",
+  "question": "What is the most played song?",
+  "query": "SELECT song_title FROM song ORDER BY plays DESC LIMIT 1",
+  "id": "music_train_003"
+ },
+ {
+  "db_id": "restaurant",
+  "question": "What is the total revenue if every dish were sold once, per restaurant?",
+  "query": "SELECT T1.rest_name, SUM(T2.price) FROM restaurant AS T1 JOIN dish AS T2 ON T1.rest_id = T2.rest_id GROUP BY T1.rest_name",
+  "id": "restaurant_train_002"
+ },
+ {
+  "db_id": "college",
+  "question": "List the titles of courses taken by the student named Alice Chen.",
+  "query": "SELECT T3.title FROM student AS T1 JOIN enrollment AS T2 ON T1.stu_id = T2.stu_id JOIN course AS T3 ON T2.course_id = T3.course_id WHERE T1.stu_name = 'Alice Chen'",
+  "id": "college_train_006"
+ },
+ {
+  "db_id": "ecommerce",
+  "question": "How many customers are in each city?",
+  "query": "SELECT city, COUNT(*) FROM customer GROUP BY city",
+  "id": "ecommerce_train_015"
+ },
+ {
+  "db_id": "flight",
+  "question": "Which airline was founded the earliest?",
+  "query": "SELECT airline_name FROM airline ORDER BY founded_year ASC LIMIT 1",
+  "id": "flight_train_006"
+ }
+]
